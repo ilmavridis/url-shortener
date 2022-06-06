@@ -1,0 +1,11 @@
+server:
+  address: "127.0.0.1:80"
+  timeoutWrite: 25s
+  timeoutRead: 25s
+  timeoutIdle: 70s
+
+redis:
+  address: "redis:6379"
+  pass: ""
+  database: 0
+  expiry: 1h

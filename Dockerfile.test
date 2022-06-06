@@ -1,0 +1,12 @@
+FROM golang:1.18.2-alpine3.16
+
+RUN adduser -D testuser -H -h /test
+
+WORKDIR /test
+COPY . .
+RUN chown -Rh testuser /test
+
+USER testuser
+
+RUN go mod download
+CMD CGO_ENABLED=0 go test -v ./...

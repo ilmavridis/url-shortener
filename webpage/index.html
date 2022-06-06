@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<HMTL>
+
+    <HEAD>
+        <TITLE>μrl - micro URL Shortener</TITLE>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico"  />
+    </HEAD>
+
+    <BODY BGCOLOR="FFFFFf" LINK="006666" ALINK="8B4513" VLINK="006666">
+        <TABLE WIDTH="75%" ALIGN="center">
+            <TR>
+                <TD>
+                    <DIV ALIGN="center">
+                        <H1>μrl - micro URL Shortener &#9889; </H1>
+                    </DIV>
+
+                    <p align="center">
+                        <img src="images/murl-logo.jpg" alt="μurl-logo" width="120" style="max-width: 100%;"></a>
+                    </p>
+
+                    <DIV ALIGN="justify">
+                        <P> A minimalistic URL shortener written in Go that uses Redis to store data. In its current form, it can shorten URLs, resolve URL redirects, and provide information about shortened URLs.&#10024;</P>
+                        <BR>
+                        <BR>
+
+                        <h2>Key Features &#9757;</h2>
+                        <ul>
+                            <li>Allows users to create custom short URLs</li>
+                            <li>Generates 6-digit short URL keys if the user does not provide a custom key</li>
+                            <li>Links, if not used, expire by default in 24 hours (configurable)</li>
+                            <li>Graceful server shutdown</li>
+                            <li>Logging, including status and service time for each request</li>
+                            <li>Implemented as a RESTful JSON API</li>
+                            <li>Decoupled back-end</li>
+                            <li>Dockerized</li>
+                        </ul>
+                        <BR>
+                        <BR>
+                        <h2>Usage &#9997;</h2>
+                        <ul>
+                            <li>
+                                <h3>/ (GET)</h3>
+                                <p>Returns this page &#128578;</p>
+                            </li>
+
+
+                            <li>
+                                <h3>/short (POST)</h3>
+                                <p>Shortens the URL provided and returns a Json response to the user</p>
+                                <ul>
+                                    <li>
+                                        <h4>Example WITH user-defined short key</strong></h4>
+                                        <p>Request &#9193; </p>
+                                        <div>
+                                            <code>  curl -X POST http://127.0.0.1:80/short -H 'Content-Type: application/json' -d '{
+            "url":"http://www.testpage.com", 
+            "short":"m1"
+            }'
+        </code>
+                                        </div>
+                                        <p>Response &#9194; </p>
+                                        <div>
+                                            <code>{"url":"http://www.testpage.com","short":"m1","expires_in_seconds":86400}
+        </code>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h4>Example WITHOUT user-defined short key</h4>
+                                        <p>Request &#9193;</p>
+                                        <div><code>  curl -X POST http://127.0.0.1:80/short -H 'Content-Type: application/json' -d '{
+            "url":"http://www.anothertestpage.com"
+            }'  
+        </code></div>
+                                        <p>Response &#9194; </p>
+                                        <div><code>{"url":"http://www.anothertestpage.com","short":"ec9626","expires_in_seconds":86400}
+        </code></div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <h3>/info/{shortURL} (GET)</h3>
+                                <p>Returns information about the specified shortened URL</p>
+                                <p>Request &#9193; </p>
+                                <div><code>  curl http://127.0.0.1:80/info/m1 
+        </code></div>
+                                <p>Response &#9194; </p>
+                                <div><code>{"url":"http://www.testpage.com","short":"m1","expires_in_seconds":85749}
+        </code></div>
+                            </li>
+                            <li>
+                                <h3>/{shortURL} (GET)</h3>
+                                <p>Redirects user to the original URL</p>
+                                <p>Request &#9193; </p>
+                                <div><code>curl -v http://127.0.0.1:80/m1 
+        </code></div>
+                                <p>Client is redirected. Detailed response &#9194; </p>
+                                <div><code>
+        ...
+           &lt; HTTP/1.1 308 Permanent Redirect
+           &lt; Content-Type: application/json; charset=utf-8
+           &lt; Location: http://www.testpage.com
+           &lt; Date: Wed, 01 Jun 2022 15:16:22 GMT
+           &lt; Content-Length: 0
+        ...
+        </code></pre>
+                                </div>
+                            </li>
+                        </ul>
+                    </DIV>
+                </TD>
+            </TR>
+    </BODY>
+
+</HTML>

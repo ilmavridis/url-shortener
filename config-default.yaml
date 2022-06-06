@@ -1,0 +1,11 @@
+server:
+  address: ":80"
+  timeoutWrite: 15s
+  timeoutRead: 15s
+  timeoutIdle: 60s
+
+redis:
+  address: "redis:6379"
+  pass: ""
+  database: 0
+  expiry: 24h # Links will be disabled if not used in the last 24 hours
